@@ -14,6 +14,10 @@ app.use(helmet.ieNoOpen())
 //diz ao browser para usar HTTPS evitando protocol downgrade
 const timeInSeconds = 90 * 24 * 60 * 60
 app.use(helmet.hsts({maxAge: timeInSeconds, force: true}))
+//desabilita o pre-fetch DNS para aumentar a segurança mas diminui a performance
+app.use(helmet.dnsPrefetchControl())
+//desabilita o caching do site. Diminui muito a performance; só use se necessário.
+app.use(helmet.noCache())
 
 
 
