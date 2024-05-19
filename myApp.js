@@ -1,8 +1,19 @@
 const express = require('express');
 const app = express();
+const helmet = require('helmet');
 
-
-
+app.use(helmet.hidePoweredBy());
+// evita uso indevido do site em iframes
+app.use(helmet.frameguard({action: 'deny'}))
+//evita XSS atack
+app.use(helmet.xssFilter())
+//força a requisição a informar o 'Content-type'
+app.use(helmet.noSniff())
+//evita que o IE execute downloads de html no contexto do site
+app.use(helmet.ieNoOpen())
+//diz ao browser para usar HTTPS evitando protocol downgrade
+const timeInSeconds = 90 * 24 * 60 * 60
+app.use(helmet.hsts({maxAge: timeInSeconds, force: true}))
 
 
 
